@@ -1,4 +1,5 @@
 # encoding: UTF-8
+require 'cgi'
 module Axlsx
   # Table
   # @note Worksheet#add_pivot_table is the recommended way to create tables for your worksheets.
@@ -73,7 +74,7 @@ module Axlsx
             tag_name = 's'
             contains_string = true
           end
-          items_tags << "<#{tag_name} v=\"#{value}\"/>"
+          items_tags << "<#{tag_name} v=\"#{CGI::escapeHTML(value.to_s)}\"/>"
         end
         str <<     "<sharedItems count=\"#{unique_values.size}\" containsSemiMixedTypes=\"#{contains_number ? '0' : '1'}\" containsInteger=\"#{contains_integer ? '1' : '0'}\" containsNumber=\"#{contains_number ? '1' : '0'}\" containsString=\"#{contains_string ? '1' : '0'}\"#{min_value.nil? ? '' : " minValue=\"#{min_value}\""}#{max_value.nil? ? '' : " maxValue=\"#{max_value}\""}>"
         str << items_tags.join
